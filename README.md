@@ -100,14 +100,14 @@ Always-on worker that monitors a public figure's Truth Social posts and pushes r
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=AlexChang1999&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=A78BFA&icon_color=A78BFA)
+![GitHub Stats](https://github-stats-extended.vercel.app/api?username=AlexChang1999&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=A78BFA&icon_color=A78BFA)
 ![Streak Stats](https://github-readme-streak-stats.herokuapp.com/?user=AlexChang1999&theme=tokyonight&hide_border=true&background=0d1117&ring=A78BFA&fire=A78BFA)
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=AlexChang1999&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=A78BFA)
+![Top Langs](https://github-stats-extended.vercel.app/api/top-langs?username=AlexChang1999&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=A78BFA)
 
 **🏆 Trophies**
 
-![Trophies](https://github-profile-trophy.vercel.app/?username=AlexChang1999&theme=algolia&no-frame=true&column=7&margin-w=8&margin-h=8)
+![Trophies](https://trophy.benkou.dev/?username=AlexChang1999&theme=algolia&no-frame=true&column=7&margin-w=8&margin-h=8)
 
 ![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=AlexChang1999&theme=tokyo-night&hide_border=true&bg_color=0d1117&color=A78BFA&line=A78BFA&point=ffffff)
 
