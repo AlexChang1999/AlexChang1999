@@ -2,7 +2,7 @@
 
 ![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12&height=180&section=header&text=Alex%20Chang&fontSize=42&fontColor=ffffff&animation=fadeIn&desc=Backend%20/%20Full-Stack%20Software%20Engineer&descAlignY=62&descSize=18)
 
-<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&pause=1000&color=A78BFA&center=true&vCenter=true&width=600&lines=Backend+%26+Microservices+Engineer;High-Concurrency+System+Design;Building+Lucky+Star+Casino+%F0%9F%8E%B0" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&pause=1000&color=A78BFA&center=true&vCenter=true&width=640&lines=Backend+%26+Microservices+Engineer;Rewriting+Java+Microservices+in+Go;High-Concurrency+%26+Ledger+Correctness;Proving+Equivalence+with+Contract+Tests" alt="Typing SVG" />
 
 [![Location](https://img.shields.io/badge/Taichung%2C%20Taiwan-7C3AED?style=for-the-badge&logo=googlemaps&logoColor=white)]()
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-6D28D9?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alexchang1229/)
@@ -19,19 +19,22 @@
 
 ## 🟣 About Me
 
-I'm a backend-focused software engineer specializing in **microservice architecture**, **high-concurrency system design**, and **distributed transaction processing**. I'm currently building **Lucky Star Casino**, a microservices-based casino ledger platform, where I design and implement high-throughput transaction handling, service gateway routing, monitoring, and containerized deployment.
+I'm a backend engineer working on **microservice architecture**, **high-concurrency system design**, and **ledger correctness**. I built **Lucky Star Casino** — a 7-service Java/Spring Boot casino ledger platform — and I'm now **rewriting it in Go, service by service**.
 
-I enjoy solving hard engineering problems around scalability, reliability, and system performance — and I'm always exploring new tools, including AI-assisted development workflows, to build better software faster.
+**The interesting part isn't the rewrite — it's proving it's equivalent.** Every replaced service has to pass the *same black-box contract suite* as the Java original, so "it behaves identically" is evidence, not a claim. Along the way I document every silent failure mode I hit (**39 and counting**): the ones with no error message, where health checks stay green and only the balance is wrong.
 
-**開發背景**：我是一名專注於後端開發的軟體工程師，擅長微服務架構設計、高併發系統設計與分散式交易處理，目前正在開發 Lucky Star Casino 娛樂城帳務系統。
+**開發背景**：後端工程師，專注微服務架構、高併發與**帳務正確性**。目前正在把自己開發的 7 服務 Java/Spring Boot 娛樂城**逐服務重構為 Go**，並用**同一份黑箱契約測試對兩版都跑**來證明等價——而不是宣稱等價。
 
-🟣 **Open To:** Backend / Full-Stack Engineer roles · Taiwan (remote or onsite)
+🟣 **Open To:** Backend / Go Engineer roles · Taiwan (remote or onsite)
 
 ---
 
 ## 🛠️ Tech Stack
 
-![Skills](https://skillicons.dev/icons?i=java,spring,python,postgres,mysql,redis,docker,git,linux,githubactions&theme=dark)
+![Skills](https://skillicons.dev/icons?i=go,java,spring,python,mysql,postgres,redis,mongodb,docker,git,linux,githubactions&theme=dark)
+
+![Gin](https://img.shields.io/badge/Gin-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![GORM](https://img.shields.io/badge/GORM-00ADD8?style=for-the-badge&logo=go&logoColor=white)
 
 ![Kafka](https://img.shields.io/badge/Kafka-000000?style=for-the-badge&logo=apachekafka&logoColor=white)
 ![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
@@ -43,9 +46,41 @@ I enjoy solving hard engineering problems around scalability, reliability, and s
 
 ## 🚀 Featured Projects
 
-### 🎰 Lucky Star Casino — Microservices Casino Ledger Platform
+### 🐹 Lucky Star Casino **Go** — Rewriting a Running Java Platform in Go
 
-Microservices-based casino ledger system handling high-throughput transaction processing, service gateway routing, monitoring, and containerized deployment.
+> **Not "a casino written in Go" — an engine swap on a system that already runs.**
+> Every behaviour has an existing correct answer; the job is to match it, not invent it.
+> And "it matches" needs proof: **the same black-box contract suite runs against both
+> the Java service and its Go replacement, and both must be green.**
+
+| Category | Details |
+|---|---|
+| Stack | **Go 1.26** · Gin · GORM · MySQL 8.4 · MongoDB · Redis · **Kafka** (`segmentio/kafka-go`) · Docker · GitHub Actions |
+| **Equivalence** | Cross-language contract suite: **11 tests / 15 table cases, green against Java (:8082) *and* Go (:8182)** |
+| **Ledger correctness** | Idempotency via UNIQUE-key conflict (not check-then-insert), optimistic locking with `RowsAffected` checks, **in-transaction compensation** for MySQL's non-aborting duplicate-key errors |
+| **Distributed consistency** | Transactional Outbox: business write + event write in **one** transaction; poller uses `FOR UPDATE SKIP LOCKED`; only ACK'd events get marked SENT |
+| **Measured** | 20 concurrent debits on one wallet → **all 20 succeed**; RR isolation → **19/20 hit deadlock 1213**, RC → 0; event latency **208–372 ms**; image **36.3 MB** (scratch, `CGO_ENABLED=0`) |
+| **Engineering rigor** | `-race` everywhere · CI spins up **real MySQL + Kafka** · **39 documented landmines**, most with *no error message* · 4 ADRs, two of which formally overturn the original team's decisions |
+| Repository | [GitHub →](https://github.com/AlexChang1999/lucky-star-casino-go) |
+
+### 📡 Lucky Star Notify Go — Hand-Rolled STOMP 1.2 Server
+
+The methodology proof for the rewrite above: the first service ported to Go, with **no
+WebSocket/STOMP framework** — the protocol subset is implemented from the spec, because
+a framework would have been in the way rather than helpful.
+
+| Category | Details |
+|---|---|
+| Stack | **Go** · standard-library `net/http` (deliberately *not* Gin) · WebSocket · Kafka · Prometheus |
+| **Equivalence** | Contract suite **14/14 green against both Java and Go** |
+| **Measured** | Image **18.6 MB** · **12.9 MiB idle RSS** (vs. a 1.28 GB-limited JVM) · broadcast p95 **4.75 ms** |
+| Why it matters | Shows *when to use a framework and when not to* — the part of the stack where hand-rolling was the right call |
+| Repository | [GitHub →](https://github.com/AlexChang1999/Lucky_Star_Notify_Go) |
+
+### 🎰 Lucky Star Casino — Microservices Casino Ledger Platform (Java, the original)
+
+The system being rewritten: 7 Spring Boot services, 555 `.java` files, dual datastores,
+Kafka event bus, Transactional Outbox, Redis as primary storage for leaderboards and sessions.
 
 | Category | Details |
 |---|---|
@@ -88,7 +123,14 @@ Always-on worker that monitors a public figure's Truth Social posts and pushes r
 
 ## 💼 Experience
 
-**Lucky Star Casino** — Backend Engineer (2026.5 – Present)
+**Lucky Star Casino — Go Rewrite** · Solo (2026.7 – Present)
+
+• Rewriting a running 7-service Java/Spring Boot platform into Go, **one service at a time**, with a black-box contract suite that must stay green against **both** implementations.
+• Ported the wallet ledger: idempotency via UNIQUE-key conflict, optimistic locking verified by `RowsAffected`, and a Transactional Outbox that writes the business row and the event **in the same transaction**.
+• Found and fixed **failure modes that produce no error message** — MySQL's case-insensitive default collation weakening idempotency keys; gap-lock deadlocks (19/20 concurrent bets) fixed by pinning the transaction to READ COMMITTED; a background poller silently blocking the ledger's hot path.
+• Built the CI that makes it hold: lint (incl. build-tagged files) → unit `-race` → **real MySQL + Kafka integration** → contract tests → container image.
+
+**Lucky Star Casino** — Backend Engineer, Java (2026.5 – Present)
 
 • Designed and built a microservices-based casino ledger platform with a dedicated API gateway and message queue.
 • Implemented high-throughput transaction handling and monitoring for distributed transaction consistency.
@@ -117,9 +159,10 @@ Always-on worker that monitors a public figure's Truth Social posts and pushes r
 
 ## 🎯 Current Focus
 
-**Currently building:** Lucky Star Casino — high-concurrency microservices ledger
-**Exploring:** Distributed transactions, service mesh patterns, AI-assisted engineering workflows
-**Open to:** Backend / Full-Stack Engineer roles in Taiwan
+**Currently building:** the Go rewrite of Lucky Star Casino — wallet ledger, Transactional Outbox, cross-language contract tests
+**Next up:** Kafka consumers + CQRS read model, then a **Go-written API gateway** (JWT, rate limiting, circuit breaking) replacing Spring Cloud Gateway
+**Exploring:** goroutine/GC tuning with `pprof`, distributed transaction patterns, OpenTelemetry tracing across services
+**Open to:** Backend / **Go** Engineer roles in Taiwan
 
 ---
 
