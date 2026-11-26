@@ -19,13 +19,17 @@
 
 ## 🟣 About Me
 
-I'm a backend engineer working on **microservice architecture**, **high-concurrency design**, and **ledger correctness**. I led the technical side of **Lucky Star Casino** — a 7-service Java/Spring Boot casino ledger platform (a simulation, no real money) — and I'm now **rewriting it in Go, service by service**.
+您好，我是張鈞皓。
 
-**The interesting part isn't the rewrite — it's proving it's equivalent.** Every replaced service has to pass the *same black-box contract suite* as the Java original, so "it behaves identically" is evidence, not a claim. Along the way I document every silent failure mode I hit (**39 and counting**): the ones with no error message, where health checks stay green and only the balance is wrong.
+我做了三年技術獵頭，每天跟工程師談架構與技術，愈談愈想自己動手，於是進資展國際（iSpan）受訓 Java，轉職後端，並開始用 Go 開發
 
-I also keep a small Go service, **fish-room-go**, as a reference for how I structure code day to day: layered architecture, dependency injection, DTO/BO/PO, and tests that run under `-race`.
+在「幸運星幣城」（線上娛樂城模擬平台，全程模擬幣、無真實金流），我擔任技術主導，帶 4 人團隊 9 週交付 7 個微服務，自己負責帳務正確性與高併發：以冪等鍵加樂觀鎖守住帳務，以 Transactional Outbox 讓 Kafka 事件不遺失，並以 token bucket 限流與熔斷做過載保護。決策寫成 12 篇 ADR，另以 717 個 JUnit 測試守住這些不變量。
 
-**開發背景**：後端工程師，專注微服務架構、高併發與**帳務正確性**。目前正在把自己主導開發的 7 服務 Java/Spring Boot 娛樂城（模擬平台，無真實金流）**逐服務重構為 Go**，並用**同一份黑箱契約測試對兩版都跑**來證明等價——而不是宣稱等價。另有個人專案 fish-room-go，展示我平常的分層、依賴注入與測試寫法。
+**Go** 的部分，魚機廳館活動設定的後台後端：**Router／Handler／Service／Repository 分層，DTO／BO／PO 與依賴注入**，用 channel 批次寫入並處理佇列滿的逾時。
+
+
+
+目前我想繼續補強的方向有：Redis（快取與分散式鎖在 Go 服務中的實際運用）、MongoDB、Kafka 在 Go 的消費端設計（重複消費、重試與順序），以及 MCP。這些我還沒有完整的專案經驗，所以不列為專長，是我接下來想補上的方向。
 
 🟣 **Open To:** Backend / Go Engineer roles · Taiwan (remote or onsite)
 
