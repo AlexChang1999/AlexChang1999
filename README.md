@@ -46,23 +46,6 @@ I'm a backend engineer working on **microservice architecture**, **high-concurre
 
 ## 🚀 Featured Projects
 
-### 🐹 Lucky Star Casino **Go** — Rewriting a Running Java Platform in Go
-
-> **Not "a casino written in Go" — an engine swap on a system that already runs.**
-> Every behaviour has an existing correct answer; the job is to match it, not invent it.
-> And "it matches" needs proof: **the same black-box contract suite runs against both
-> the Java service and its Go replacement, and both must be green.**
-
-| Category | Details |
-|---|---|
-| Stack | **Go 1.26** · Gin · GORM · MySQL 8.4 · MongoDB · Redis · **Kafka** (`segmentio/kafka-go`) · Docker · GitHub Actions |
-| **Equivalence** | Cross-language contract suite: **11 tests / 15 table cases, green against Java (:8082) *and* Go (:8182)** |
-| **Ledger correctness** | Idempotency via UNIQUE-key conflict (not check-then-insert), optimistic locking with `RowsAffected` checks, **in-transaction compensation** for MySQL's non-aborting duplicate-key errors |
-| **Distributed consistency** | Transactional Outbox: business write + event write in **one** transaction; poller uses `FOR UPDATE SKIP LOCKED`; only ACK'd events get marked SENT |
-| **Measured** | 20 concurrent debits on one wallet → **all 20 succeed**; RR isolation → **19/20 hit deadlock 1213**, RC → 0; event latency **208–372 ms**; image **36.3 MB** (scratch, `CGO_ENABLED=0`) |
-| **Engineering rigor** | `-race` everywhere · CI spins up **real MySQL + Kafka** · **39 documented landmines**, most with *no error message* · 4 ADRs, two of which formally overturn the original team's decisions |
-| Repository | [GitHub →](https://github.com/AlexChang1999/lucky-star-casino-go) |
-
 ### 📡 Lucky Star Notify Go — Hand-Rolled STOMP 1.2 Server
 
 The methodology proof for the rewrite above: the first service ported to Go, with **no
@@ -99,15 +82,7 @@ Multi-bot architecture for automated US stock trading strategies, each bot runni
 | Stack | Python · FastAPI · React (Vite) · SQLite/Alembic · Alpaca API |
 | Scale | 9 trading strategies, multi-bot management, local LLM-assisted strategy workbench |
 | Repository | [GitHub →](https://github.com/AlexChang1999/Albee_Stock) |
-### 🛋️ Sogno di Casa — Premium Furniture E-Commerce Platform
 
-Full-stack e-commerce platform for high-end designer furniture, with product browsing, cart, membership system, and an admin back office.
-
-| Category | Details |
-|---|---|
-| Stack | Java 21 · Spring Boot 3.2 · Spring Security (JWT) · PostgreSQL · Vanilla JS |
-| Features | JWT stateless auth with email OTP verification, product/brand/designer catalog, cart & checkout, admin CRUD |
-| Repository | [GitHub →](https://github.com/AlexChang1999/Sogno_di_Casa) |
 
 ### 🤖 TrumpTrueSocial_Bot — 24/7 Social Monitoring Bot
 
